@@ -17,19 +17,11 @@ public class BaseUserController extends BaseController {
     @Autowired
     private BaseUserService baseUserService;
 
-    @Autowired
-    private BaseUserRpc baseUserRpc;
 
     @RequestMapping(value= "/save")
     public HttpResult save(@RequestBody BaseUserResp baseUserResp){
 
         baseUserService.save(baseUserResp);
-        return success();
-    }
-    @RequestMapping(value= "/saveRpc")
-    public HttpResult saveRpc(@RequestBody BaseUserVO baseUserResp){
-
-        baseUserRpc.save(baseUserResp);
         return success();
     }
 
