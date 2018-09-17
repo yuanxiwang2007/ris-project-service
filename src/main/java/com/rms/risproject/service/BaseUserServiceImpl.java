@@ -4,12 +4,10 @@ import com.rms.risproject.api.BaseUserService;
 import com.rms.risproject.mapper.BaseUserMapper;
 import com.rms.risproject.model.bo.BaseUserBo;
 import com.rms.risproject.model.response.BaseUserResp;
-import org.apache.logging.log4j.core.util.UuidUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
 public class BaseUserServiceImpl implements BaseUserService {
