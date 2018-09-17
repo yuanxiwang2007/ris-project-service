@@ -5,11 +5,14 @@ import com.rms.common.result.HttpResult;
 import com.rms.risproject.api.BaseUserService;
 import com.rms.risproject.model.response.BaseUserResp;
 import com.rms.risproject.rpc.BaseUserRpc;
+import com.rms.risproject.service.RedisService;
 import com.rms.risproject.vo.BaseUserVO;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+@Log4j
 @RestController
 @RequestMapping("/UserManager")
 public class BaseUserController extends BaseController {
@@ -17,6 +20,21 @@ public class BaseUserController extends BaseController {
     @Autowired
     private BaseUserService baseUserService;
 
+    @Autowired
+    private RedisService redisService;
+
+    @RequestMapping("/index")
+    public HttpResult index(){
+        BaseUserResp baseUserResp=new BaseUserResp();
+        baseUserResp.setKeyId("111111111");
+        String key="13212312";
+        redisService.set(key,key);
+
+        String baseUserResp1=(String)redisService.get(key);
+
+        log.info("取值："+baseUserResp1.toString());
+        return success(baseUserResp1);
+    }
 
     @RequestMapping(value= "/save")
     public HttpResult save(@RequestBody BaseUserResp baseUserResp){

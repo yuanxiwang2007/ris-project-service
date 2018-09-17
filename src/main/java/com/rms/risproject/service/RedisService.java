@@ -31,15 +31,15 @@ public class RedisService {
         RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
         return rcm;
     }
-    @Autowired(required = false)
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
-        RedisSerializer stringSerializer = new StringRedisSerializer();
-        redisTemplate.setKeySerializer(stringSerializer);
-        redisTemplate.setValueSerializer(stringSerializer);
-        redisTemplate.setHashKeySerializer(stringSerializer);
-        redisTemplate.setHashValueSerializer(stringSerializer);
-        this.redisTemplate = redisTemplate;
-    }
+//    @Autowired(required = false)
+//    public void setRedisTemplate(RedisTemplate redisTemplate) {
+//        RedisSerializer stringSerializer = new StringRedisSerializer();
+//        redisTemplate.setKeySerializer(stringSerializer);
+//        redisTemplate.setValueSerializer(stringSerializer);
+//        redisTemplate.setHashKeySerializer(stringSerializer);
+//        redisTemplate.setHashValueSerializer(stringSerializer);
+//        this.redisTemplate = redisTemplate;
+//    }
     /**
      * redisTemplate 序列化使用的jdkSerializeable, 存储二进制字节码, 所以自定义序列化类
      * @param redisConnectionFactory

@@ -25,16 +25,7 @@ public class Application {
         log.warn("warn:111111111");
         log.debug("debug:111111111");
         SpringApplication.run(Application.class,args);
-        RedisService redisService=new RedisService();
 
-        BaseUserResp baseUserResp=new BaseUserResp();
-        baseUserResp.setKeyId("111111111");
-        String key="app:cheh:session:13212312";
-        redisService.set(key,baseUserResp);
-
-        BaseUserResp baseUserResp1=(BaseUserResp)redisService.get(key);
-
-        log.info("取值："+baseUserResp1.toString());
 
 
     }
