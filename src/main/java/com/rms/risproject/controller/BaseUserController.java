@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-@Log4j
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/UserManager")
 public class BaseUserController extends BaseController {
@@ -27,10 +28,10 @@ public class BaseUserController extends BaseController {
     public HttpResult index(){
         BaseUserResp baseUserResp=new BaseUserResp();
         baseUserResp.setKeyId("111111111");
-        String key="13212312";
-        redisService.set(key,key);
+        String key= UUID.randomUUID().toString();
+        redisService.put(key,baseUserResp);
 
-        String baseUserResp1=(String)redisService.get(key);
+        BaseUserResp baseUserResp1=(BaseUserResp)redisService.get(key);
 
         log.info("取值："+baseUserResp1.toString());
         return success(baseUserResp1);
@@ -45,7 +46,7 @@ public class BaseUserController extends BaseController {
 
     @RequestMapping(value= "/update")
     public HttpResult update(@RequestBody BaseUserResp baseUserResp){
-        logger.info(String.format("/update:{0}",baseUserResp.toString()));
+        log.info(String.format("/update:{0}",baseUserResp.toString()));
 
         if(StringUtils.isEmpty(baseUserResp.getKeyId())){
             return error("更新用户的ID不能为空！");
@@ -54,7 +55,7 @@ public class BaseUserController extends BaseController {
             baseUserService.update(baseUserResp);
             return success();
         }catch (Exception ex){
-            logger.error(ex.getMessage());
+            log.error(ex.getMessage());
             return error("更新失败");
         }
 
