@@ -29,7 +29,7 @@ public class BaseUserController extends BaseController {
         BaseUserResp baseUserResp=new BaseUserResp();
         baseUserResp.setKeyId("111111111");
         String key= UUID.randomUUID().toString();
-        redisService.put(key,baseUserResp);
+        redisService.set(key,baseUserResp);
 
         BaseUserResp baseUserResp1=(BaseUserResp)redisService.get(key);
 
