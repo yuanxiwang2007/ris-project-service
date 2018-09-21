@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/UserManager")
@@ -28,8 +29,8 @@ public class BaseUserController extends BaseController {
     public HttpResult index(){
         BaseUserResp baseUserResp=new BaseUserResp();
         baseUserResp.setKeyId("111111111");
-        String key= UUID.randomUUID().toString();
-        redisService.set(key,baseUserResp);
+        String key="ris:project:"+ UUID.randomUUID().toString();
+        redisService.set(key,baseUserResp,1l, TimeUnit.MINUTES);
 
         BaseUserResp baseUserResp1=(BaseUserResp)redisService.get(key);
 

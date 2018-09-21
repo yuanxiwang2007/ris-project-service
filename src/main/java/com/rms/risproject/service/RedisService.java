@@ -1,6 +1,5 @@
 package com.rms.risproject.service;
 
-import com.rms.risproject.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
@@ -43,6 +42,24 @@ public class RedisService {
             ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
             operations.set(key, value);
             redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    /**
+     * 写入缓存设置时效时间
+     * @param key
+     * @param value
+     * @return
+     */
+    public boolean set(final String key, Object value, Long expireTime,TimeUnit unit) {
+        boolean result = false;
+        try {
+            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+            operations.set(key, value);
+            redisTemplate.expire(key, expireTime, unit);
             result = true;
         } catch (Exception e) {
             e.printStackTrace();
