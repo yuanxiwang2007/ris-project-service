@@ -7,6 +7,10 @@ import com.rms.risproject.model.response.BaseUserResp;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletWebRequest;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 @Service
@@ -18,7 +22,7 @@ public class BaseUserServiceImpl implements BaseUserService {
     @Override
     public int save(BaseUserResp vo) {
         BaseUserBo baseUserBo=new BaseUserBo();
-
+        HttpServletResponse resp = ((ServletWebRequest) RequestContextHolder.getRequestAttributes()).getResponse();
         //vo.setKeyId(UuidUtil.getTimeBasedUuid().toString().replace("-",""));
         //baseUserBo.setKeyId();
         BeanUtils.copyProperties(vo,baseUserBo);
