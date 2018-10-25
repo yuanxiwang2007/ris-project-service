@@ -1,7 +1,11 @@
 package com.rms.risproject;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.rms.risproject.model.response.BaiduResult;
 import com.rms.risproject.model.response.BaseUserResp;
 import com.rms.risproject.service.RedisService;
+import com.rms.risproject.vo.BaseUserVO;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +28,16 @@ public class Application {
         log.error("error:111111111");
         log.warn("warn:111111111");
         log.debug("debug:111111111");
+        String str="{\n" +
+                "  \"code\": \"-1\",\n" +
+                "  \"data\": {\n" +
+                "    \"code\": \"code001\",\n" +
+                "    \"name\": \"袁希望\"\n" +
+                "  }\n" +
+                "}";
+
+        //BaiduResult<BaseUserVO> baiduResult= JSON.parseObject(str,new TypeReference<BaiduResult<BaseUserVO>>(){});
+        BaiduResult<BaseUserVO> baiduResult= JSON.parseObject(str,new BaiduResult<BaseUserVO>().getClass());
         SpringApplication.run(Application.class,args);
 
 
