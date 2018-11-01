@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.UUID;
@@ -12,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @Log4j
-@ServerEndpoint(value = "/websocket")
+@ServerEndpoint(value = "/websocket/{userId}/{token}")
 @Component
 public class WebSocket {
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
@@ -22,13 +23,17 @@ public class WebSocket {
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
+    private String userId;
+    private String token;
 
     /**
      * 连接建立成功调用的方法
      */
     @OnOpen
-    public void onOpen(Session session) {
+    public void onOpen(@PathParam("userId") String userId,@PathParam("token") String token, Session session) {
         this.session = session;
+        this.userId=userId;
+        this.token=token;
         String macId= UUID.randomUUID().toString().replace("-","");
         webSocketSet.put(macId,this);     //加入set中
         addOnlineCount();           //在线数加1
