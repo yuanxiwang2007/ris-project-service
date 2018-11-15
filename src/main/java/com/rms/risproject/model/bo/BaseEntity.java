@@ -5,12 +5,13 @@ import lombok.Generated;
 
 import javax.persistence.*;
 
+
 @Data
 public class BaseEntity {
 
     @Id
     @Column(name = "keyId")
-    @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select REPLACE(uuid(),'-','')")
+    //@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select REPLACE(uuid(),'-','')")
     private String keyId;
 
     @Column(name = "IsDelete")
