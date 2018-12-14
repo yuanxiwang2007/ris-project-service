@@ -8,7 +8,6 @@
     <dubbo:registry address="${spring.dubbo.registry.address}" file="./tmp/urine-dubbo-registry.cache"/>
     <dubbo:protocol port="${spring.dubbo.protocol.port}" name="dubbo" heartbeat="31005"/>
     <dubbo:application name="${spring.dubbo.application.name}" owner="wk"/>
-
     <dubbo:provider timeout="30000"/>
     <dubbo:consumer check="false" retries="0" timeout="30000" lazy="true"/>
 

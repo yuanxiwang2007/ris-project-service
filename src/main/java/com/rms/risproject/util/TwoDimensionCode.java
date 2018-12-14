@@ -2,16 +2,12 @@ package com.rms.risproject.util;
 
 
 import com.rms.common.excel.ParamException;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageDecoder;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.swetake.util.Qrcode;
 import jp.sourceforge.qrcode.QRCodeDecoder;
 import jp.sourceforge.qrcode.exception.DecodingFailedException;
 import org.springframework.util.StringUtils;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -146,7 +142,7 @@ public class TwoDimensionCode {
         try {
             Qrcode qrcodeHandler = new Qrcode();
             // 设置二维码排错率，可选L(7%)、M(15%)、Q(25%)、H(30%)，排错率越高可存储的信息越少，但对二维码清晰度的要求越小
-            qrcodeHandler.setQrcodeErrorCorrect('M');
+            qrcodeHandler.setQrcodeErrorCorrect('L');
             qrcodeHandler.setQrcodeEncodeMode('B');
             // 设置设置二维码尺寸，取值范围1-40，值越大尺寸越大，可存储的信息越大
             qrcodeHandler.setQrcodeVersion(complex);
@@ -233,83 +229,6 @@ public class TwoDimensionCode {
         return content;
     }
 
-    public static String exportImg() {
-        try {
-            //1.jpg是你的 主图片的路径
-            String jzz = "D:\\HISWORK\\需求文档\\企鹅健康\\2018-10-15共享健康_红包版\\背景.jpg";// request.getSession().getServletContext().getRealPath(File.separator) + ReadConfig.getConfigValue("jzz") + File.separator;
-            InputStream is = new FileInputStream(jzz);
-
-            //通过JPEG图象流创建JPEG数据流解码器
-            JPEGImageDecoder jpegDecoder = JPEGCodec.createJPEGDecoder(is);
-            //解码当前JPEG数据流，返回BufferedImage对象
-            BufferedImage buffImg = jpegDecoder.decodeAsBufferedImage();
-            //得到画笔对象
-            Graphics g = buffImg.getGraphics();
-
-            //创建你要附加的图象。
-            //小图片的路径
-            String uploadDir = "D:\\HISWORK\\需求文档\\企鹅健康\\2018-10-15共享健康_红包版\\ico.jpg";
-            ImageIcon imgIcon = new ImageIcon(uploadDir);
-
-            //得到Image对象。
-            Image img = imgIcon.getImage();
-
-            //将小图片绘到大图片上。
-            //5,300 .表示你的小图片在大图片上的位置。
-            g.drawImage(img, 5, 5, null);
-
-            //设置颜色。
-            g.setColor(Color.BLACK);
-
-
-            //最后一个参数用来设置字体的大小
-            Font f = new Font("宋体", Font.PLAIN, 11);
-            Color mycolor = Color.BLACK;//new Color(0, 0, 255);
-            g.setColor(mycolor);
-            g.setFont(f);
-
-            //10,20 表示这段文字在图片上的位置(x,y) .第一个是你设置的内容。
-            g.drawString("扫描验证真伪", 10, 130);
-
-
-//            Graphics2D tip = buffImg.createGraphics();
-//            tip.setColor(Color.BLACK);
-//            //设置字体
-//            Font tipFont = new Font("宋体", Font.PLAIN, 14);
-//            tip.setFont(tipFont);
-//            //内容，左右位置，上下位置
-//            tip.drawString(piousCard.getPersonName(), 135, 285);
-//            tip.drawString(piousCard.getYear(), 160, 323);
-//            tip.drawString(piousCard.getCardNum(), 553, 82);
-//            SimpleDateFormat bartDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            Date date = new Date();
-//            tip.drawString(bartDateFormat.format(piousCard.getIssueDate()), 590, 460);
-            g.dispose();
-
-            OutputStream os;
-
-//            os = new FileOutputStream("d:/union.jpg");
-            String upJzzUrl = "d:\\";
-            String shareFileName = "cc.jpg";
-            os = new FileOutputStream(upJzzUrl + shareFileName);
-            //创键编码器，用于编码内存中的图象数据。
-            JPEGImageEncoder en = JPEGCodec.createJPEGEncoder(os);
-            en.encode(buffImg);
-
-            is.close();
-            os.close();
-            return shareFileName;
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
-
-    }
-
     /**
      * 方法说明 encoderQRCode 生成带背景图的二维码
      *
@@ -327,18 +246,19 @@ public class TwoDimensionCode {
                 backPath = backPath.replace("classpath:", "src/main/resources/");
             }
             BufferedImage buffImg;
-            int titleHeight=40;
+            int titleHeight = 40;
             if (StringUtils.isEmpty(backPath)) {
-                buffImg = new BufferedImage(backImg.getIcoSize()+1, backImg.getIcoSize() + titleHeight, BufferedImage.TYPE_INT_RGB);
+                buffImg = new BufferedImage(backImg.getIcoSize() + 1, backImg.getIcoSize() + titleHeight, BufferedImage.TYPE_INT_RGB);
                 Graphics2D gs = buffImg.createGraphics();
                 // 设置背景颜色
                 gs.setBackground(Color.WHITE);
-                gs.clearRect(0, 0, backImg.getIcoSize()+1, backImg.getIcoSize() + titleHeight);
-
+                gs.clearRect(0, 0, backImg.getIcoSize() + 1, backImg.getIcoSize() + titleHeight);
                 backImg.setIcoX(0);
-                backImg.setIcoY(titleHeight-1);
+                backImg.setIcoY(titleHeight - 1);
             } else {
                 buffImg = ImageIO.read(new File(backPath));
+                //buffImg = ImageIO.read(this.getClass().getResourceAsStream(backPath));
+
             }
             //得到画笔对象
             Graphics g = buffImg.getGraphics();
@@ -356,7 +276,7 @@ public class TwoDimensionCode {
             //设置颜色。
             g.setColor(Color.BLACK);
 
-            if(StringUtils.isEmpty(backPath)){
+            if (StringUtils.isEmpty(backPath)) {
                 //最后一个参数用来设置字体的大小
                 Font f = new Font("宋体", Font.BOLD, backImg.getTitleFontSize());
                 Color mycolor = Color.BLACK;//new Color(0, 0, 255);

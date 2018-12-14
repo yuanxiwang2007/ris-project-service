@@ -83,11 +83,11 @@ public class BaseUserController extends BaseController {
     @RequestMapping(value = "/UserListExportExcel")
     public HttpResult UserListExportExcel(@RequestParam("fileName") String fileName) {
         List<BaseUserResp> userRespList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 50; i++) {
             BaseUserResp baseUserResp = new BaseUserResp();
-            baseUserResp.setKeyId("keyid123123" + i);
-            baseUserResp.setCode("code1312111" + i);
-            baseUserResp.setName("张三" + i);
+            baseUserResp.setKeyId("keyid123123" + i/8);
+            baseUserResp.setCode("code1312111" + i/5);
+            baseUserResp.setName("张三" + i/3);
             baseUserResp.setPhoneNo("133456788" + i);
             baseUserResp.setAge(18 + i);
             userRespList.add(baseUserResp);
@@ -101,22 +101,22 @@ public class BaseUserController extends BaseController {
     }
 
     @RequestMapping(value = "/promotionCode")
-    public HttpResult promotionCode(int size,int pixelSize,int complex, HttpServletResponse response) throws Exception {
+    public HttpResult promotionCode(int size, int pixelSize, int complex, HttpServletResponse response) throws Exception {
         TwoDimensionCodeBackImg backImg = new TwoDimensionCodeBackImg();
         TwoDimensionCode handler = new TwoDimensionCode();
-        //backImg.setBackPath("classpath:qrCodeBackImg.png");
-        backImg.setBackPath("");
+        backImg.setBackPath("classpath:qrCodeBackImg.png");
+        //backImg.setBackPath("");
         backImg.setIcoSize(250);
         backImg.setIcoX(250);
         backImg.setIcoY(603);
-        backImg.setTitle("扫码解锁红包");
-        backImg.setTitleX(10);
-        backImg.setTitleX(10);
-        String randomStr ="12010101200100481540435520077";
+        //backImg.setTitle("扫码解锁红包");
+        //backImg.setTitleX(10);
+        //backImg.setTitleX(10);
+        String randomStr = "c5d7ce098164dbd986e970b339fbccc";
         String path = URLEncoder.encode(randomStr, "UTF-8");
         String projectPath = "https://urine-analysis.doctorwork.com/urine-miniapp";
-        handler.encoderQRCode(projectPath + "/unknown?path=" + path, response.getOutputStream(), backImg, size, pixelSize, complex);
-
+        handler.encoderQRCode(projectPath + "/unknown?scene=" + randomStr + "&from=couponQrCode", response.getOutputStream(), backImg, size, pixelSize, complex);
+//?scene=c5d7ce098164dbd986e970b339fbccc&from=couponQrCode
         return success();
     }
 }

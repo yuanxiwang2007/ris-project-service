@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.File;
+import java.io.IOException;
+
 
 @Log4j
 @Controller
@@ -31,7 +34,6 @@ public class Application {
                 "    \"name\": \"袁希望\"\n" +
                 "  }\n" +
                 "}";
-
         //BaiduResult<BaseUserVO> baiduResult= JSON.parseObject(str,new TypeReference<BaiduResult<BaseUserVO>>(){});
         BaiduResult<BaseUserVO> baiduResult = JSON.parseObject(str, new BaiduResult<BaseUserVO>().getClass());
         SpringApplication.run(Application.class, args);
