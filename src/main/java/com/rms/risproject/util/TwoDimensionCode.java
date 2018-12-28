@@ -242,9 +242,6 @@ public class TwoDimensionCode {
     public void encoderQRCode(String content, OutputStream output, TwoDimensionCodeBackImg backImg, int size, int pixelSize, int complex) {
         try {
             String backPath = backImg.getBackPath();
-            if (backPath.contains("classpath:")) {
-                backPath = backPath.replace("classpath:", "src/main/resources/");
-            }
             BufferedImage buffImg;
             int titleHeight = 40;
             if (StringUtils.isEmpty(backPath)) {
@@ -256,8 +253,8 @@ public class TwoDimensionCode {
                 backImg.setIcoX(0);
                 backImg.setIcoY(titleHeight - 1);
             } else {
-                buffImg = ImageIO.read(new File(backPath));
-                //buffImg = ImageIO.read(this.getClass().getResourceAsStream(backPath));
+                //buffImg = ImageIO.read(new File(backPath));
+                buffImg = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(backPath));
 
             }
             //得到画笔对象

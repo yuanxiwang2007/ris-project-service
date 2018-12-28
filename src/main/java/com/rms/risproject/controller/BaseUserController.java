@@ -3,11 +3,11 @@ package com.rms.risproject.controller;
 import com.rms.common.controller.BaseController;
 import com.rms.common.excel.ExcelUtil;
 import com.rms.common.result.HttpResult;
+import com.rms.common.util.qr.TwoDimensionCode;
+import com.rms.common.util.qr.TwoDimensionCodeBackImg;
 import com.rms.risproject.api.BaseUserService;
 import com.rms.risproject.model.response.BaseUserResp;
 import com.rms.risproject.service.RedisService;
-import com.rms.risproject.util.TwoDimensionCode;
-import com.rms.risproject.util.TwoDimensionCodeBackImg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -85,9 +85,9 @@ public class BaseUserController extends BaseController {
         List<BaseUserResp> userRespList = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
             BaseUserResp baseUserResp = new BaseUserResp();
-            baseUserResp.setKeyId("keyid123123" + i/8);
-            baseUserResp.setCode("code1312111" + i/5);
-            baseUserResp.setName("张三" + i/3);
+            baseUserResp.setKeyId("keyid123123" + i / 8);
+            baseUserResp.setCode("code1312111" + i / 5);
+            baseUserResp.setName("张三" + i / 3);
             baseUserResp.setPhoneNo("133456788" + i);
             baseUserResp.setAge(18 + i);
             userRespList.add(baseUserResp);
@@ -104,7 +104,7 @@ public class BaseUserController extends BaseController {
     public HttpResult promotionCode(int size, int pixelSize, int complex, HttpServletResponse response) throws Exception {
         TwoDimensionCodeBackImg backImg = new TwoDimensionCodeBackImg();
         TwoDimensionCode handler = new TwoDimensionCode();
-        backImg.setBackPath("classpath:qrCodeBackImg.png");
+        backImg.setBackPath("qrCodeBackImg.png");
         //backImg.setBackPath("");
         backImg.setIcoSize(250);
         backImg.setIcoX(250);
@@ -112,10 +112,14 @@ public class BaseUserController extends BaseController {
         //backImg.setTitle("扫码解锁红包");
         //backImg.setTitleX(10);
         //backImg.setTitleX(10);
-        String randomStr = "c5d7ce098164dbd986e970b339fbccc";
-        String path = URLEncoder.encode(randomStr, "UTF-8");
+        String randomStr = "1201010120010991_539654";
+        String path = URLEncoder.encode("pages/index/info?type=" + 32, "UTF-8");
         String projectPath = "https://urine-analysis.doctorwork.com/urine-miniapp";
-        handler.encoderQRCode(projectPath + "/unknown?scene=" + randomStr + "&from=couponQrCode", response.getOutputStream(), backImg, size, pixelSize, complex);
+        handler.encoderQRCode(projectPath + "/unknown?scene="+randomStr+"&path=" + path + "&from=home",
+                response.getOutputStream(),backImg,size,pixelSize,complex);
+
+        //"https://urine-analysis-dev.doctorwork.com/urine-miniapp/unknown?scene=pages/index/info?type=1&from=home"
+        //handler.encoderQRCode(projectPath + "/unknown?scene=" + path + "&from=home", response.getOutputStream(), "png", size, pixelSize, complex);
 //?scene=c5d7ce098164dbd986e970b339fbccc&from=couponQrCode
         return success();
     }

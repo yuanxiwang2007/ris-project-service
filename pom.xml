@@ -173,6 +173,11 @@
             <artifactId>UserAgentUtils</artifactId>
             <version>1.20</version>
         </dependency>
+        <!-- mongodb -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <finalName>ris-project-service</finalName>
@@ -230,6 +235,8 @@
                     <include>**/*.json</include>
                     <include>**/*.txt</include>
                     <include>**/*.css</include>
+                    <include>**/*.Filter</include>
+                    <include>**/*.png</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

@@ -1,1 +1,0 @@
-consumerLog=com.rms.risproject.service.SettingRpcFilter

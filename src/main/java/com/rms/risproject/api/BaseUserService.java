@@ -6,7 +6,7 @@ public interface BaseUserService {
 
     int save(BaseUserResp vo);
 
-    int update(BaseUserResp vo);
+    int update(BaseUserResp vo) throws NoSuchFieldException, IllegalAccessException;
 
     int delete(String keyId);
 
