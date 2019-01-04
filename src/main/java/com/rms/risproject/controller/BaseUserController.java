@@ -10,10 +10,7 @@ import com.rms.risproject.model.response.BaseUserResp;
 import com.rms.risproject.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
@@ -121,6 +118,16 @@ public class BaseUserController extends BaseController {
         //"https://urine-analysis-dev.doctorwork.com/urine-miniapp/unknown?scene=pages/index/info?type=1&from=home"
         //handler.encoderQRCode(projectPath + "/unknown?scene=" + path + "&from=home", response.getOutputStream(), "png", size, pixelSize, complex);
 //?scene=c5d7ce098164dbd986e970b339fbccc&from=couponQrCode
+        return success();
+    }
+    @RequestMapping(value = "/postdelete/{id}")
+    public HttpResult postdelete(@PathVariable Integer id) {
+        //@RequestBody
+        String keyId = "222";
+        if (StringUtils.isEmpty(id)) {
+            return error("删除用户的ID不能为空！");
+        }
+        baseUserService.delete(keyId);
         return success();
     }
 }

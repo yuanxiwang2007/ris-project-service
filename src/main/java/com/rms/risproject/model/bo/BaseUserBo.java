@@ -23,4 +23,7 @@ public class BaseUserBo extends BaseEntity {
 
     @Column(name = "loginPwd")
     private String loginPwd;
+
+    public static Integer num1 = 100;
+    public static final Integer num2 = 100;
 }
