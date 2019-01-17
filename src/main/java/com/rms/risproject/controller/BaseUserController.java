@@ -34,8 +34,14 @@ public class BaseUserController extends BaseController {
         BaseUserResp baseUserResp = new BaseUserResp();
         baseUserResp.setKeyId("111111111");
         String key = "ris:project:" + UUID.randomUUID().toString();
-        redisService.set(key, baseUserResp, 1l, TimeUnit.MINUTES);
 
+        String formid=UUID.randomUUID().toString();
+
+        redisService.set(key, baseUserResp, 1l, TimeUnit.MINUTES);
+        redisService.putFormID("yxw", formid, 7);
+        formid=UUID.randomUUID().toString();
+        redisService.putFormID("yxw", formid, 7);
+        redisService.getFormID("yxw");
         BaseUserResp baseUserResp1 = (BaseUserResp) redisService.get(key);
 
         logger.info("取值：" + baseUserResp1.toString());
@@ -112,14 +118,15 @@ public class BaseUserController extends BaseController {
         String randomStr = "1201010120010991_539654";
         String path = URLEncoder.encode("pages/index/info?type=" + 32, "UTF-8");
         String projectPath = "https://urine-analysis.doctorwork.com/urine-miniapp";
-        handler.encoderQRCode(projectPath + "/unknown?scene="+randomStr+"&path=" + path + "&from=home",
-                response.getOutputStream(),backImg,size,pixelSize,complex);
+        handler.encoderQRCode(projectPath + "/unknown?scene=" + randomStr + "&path=" + path + "&from=home",
+                response.getOutputStream(), backImg, size, pixelSize, complex);
 
         //"https://urine-analysis-dev.doctorwork.com/urine-miniapp/unknown?scene=pages/index/info?type=1&from=home"
         //handler.encoderQRCode(projectPath + "/unknown?scene=" + path + "&from=home", response.getOutputStream(), "png", size, pixelSize, complex);
 //?scene=c5d7ce098164dbd986e970b339fbccc&from=couponQrCode
         return success();
     }
+
     @RequestMapping(value = "/postdelete/{id}")
     public HttpResult postdelete(@PathVariable Integer id) {
         //@RequestBody

@@ -7,9 +7,13 @@ import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +21,11 @@ import java.io.IOException;
 
 @Log4j
 @Controller
+@EnableWebMvc
+@EnableAsync
+@EnableScheduling
 @SpringBootApplication
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 604800)
 @MapperScan(basePackages = {"com.rms.risproject.mapper", "com.rms.risproject.ordermapper"})
 public class Application {
     //@Autowired

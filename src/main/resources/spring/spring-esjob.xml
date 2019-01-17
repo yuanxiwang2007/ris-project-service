@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
+       xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.dangdang.com/schema/ddframe/reg
+                        http://www.dangdang.com/schema/ddframe/reg/reg.xsd
+                        http://www.dangdang.com/schema/ddframe/job
+                        http://www.dangdang.com/schema/ddframe/job/job.xsd
+                        ">
+    <!--配置作业注册中心 -->
+    <reg:zookeeper id="regCenter" server-lists="${private.esjob.zookeeper.server.lists}" namespace="ris-project-job" base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3" />
+
+    <job:simple id="h5SerectJob" class="com.rms.risproject.job.H5SecretElasticJob" registry-center-ref="regCenter" cron="0 0 * * * ?" sharding-total-count="1" overwrite="true" />
+    <!-- 发送基因检测短信-->
+    <job:simple id="sendGeneCompleteMsgJob" class="com.rms.risproject.job.SendGeneCompleteMsgJob" registry-center-ref="regCenter" cron="0 0 9 * * ?" sharding-total-count="1" overwrite="true" />
+    <!-- 每周一赠送小红盒会员商城礼券 -->
+    <job:simple id="giftXinxuanCouponJob" class="com.rms.risproject.job.GiftXinxuanCouponJob" registry-center-ref="regCenter" cron="0 0 10 * * ?" sharding-total-count="1" overwrite="true" />
+    <!-- 每天十点发送消息 -->
+    <job:simple id="sendXinxuanCouponMessageJob" class="com.rms.risproject.job.SendAssociatorMessageJob" registry-center-ref="regCenter" cron="0 0 11 * * ?" sharding-total-count="1" overwrite="true" />
+    <!-- 每天十点发送消息 -->
+    <!--<job:simple id="sendXinxuanCouponMessageJob" class="com.doctorwork.urineminiapp.job.SendAssociatorMessageJob" registry-center-ref="regCenter" cron="0 0 10 * * * ?" sharding-total-count="1" overwrite="true" />-->
+    <!--获取优惠券到期提示用户信息-->
+    <!--<job:simple id="checkCouponValidDaysJob" class="com.doctorwork.urineminiapp.job.CheckCouponValidDaysJob" registry-center-ref="regCenter" cron="0/30 * * * * ?" sharding-total-count="1" overwrite="true" />-->
+    <!-- 发送优惠券到期提示短信-->
+    <!--<job:simple id="sendCouponValidDaysMsgJob" class="com.doctorwork.urineminiapp.job.SendCouponValidDaysMsgJob" registry-center-ref="regCenter" cron="0/30 * * * * ?" sharding-total-count="1" overwrite="true" />-->
+</beans>
